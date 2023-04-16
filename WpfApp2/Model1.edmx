@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PEModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Group_p">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kol_chel" Type="int" />
+        </EntityType>
+        <EntityType Name="Instruktor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_Group" Type="int" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "PE.dbo.Kod_podrazdel" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Kod_podrazdel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kodpodrazdel" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="date_bir" Type="date" />
+          <Property Name="id_pol" Type="int" Nullable="false" />
+          <Property Name="id_group" Type="int" />
+        </EntityType>
+        <EntityType Name="Pol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pol" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_Instruktor_Group_p">
+          <End Role="Group_p" Type="Self.Group_p" Multiplicity="0..1" />
+          <End Role="Instruktor" Type="Self.Instruktor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group_p">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Instruktor">
+              <PropertyRef Name="id_Group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Group_p">
+          <End Role="Group_p" Type="Self.Group_p" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group_p">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="id_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Pol">
+          <End Role="Pol" Type="Self.Pol" Multiplicity="1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="id_pol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PEModelContainer">
+          <EntitySet Name="Group_p" EntityType="Self.Group_p" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Instruktor" EntityType="Self.Instruktor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pol" EntityType="Self.Pol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kod_podrazdel" EntityType="Self.Kod_podrazdel" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Kod_podrazdel].[ID] AS [ID], 
+    [Kod_podrazdel].[Kodpodrazdel] AS [Kodpodrazdel]
+    FROM [dbo].[Kod_podrazdel] AS [Kod_podrazdel]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Instruktor_Group_p" Association="Self.FK_Instruktor_Group_p">
+            <End Role="Group_p" EntitySet="Group_p" />
+            <End Role="Instruktor" EntitySet="Instruktor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Group_p" Association="Self.FK_People_Group_p">
+            <End Role="Group_p" EntitySet="Group_p" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Pol" Association="Self.FK_People_Pol">
+            <End Role="Pol" EntitySet="Pol" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Group_p">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kol_chel" Type="Int32" />
+          <NavigationProperty Name="Instruktor" Relationship="Self.FK_Instruktor_Group_p" FromRole="Group_p" ToRole="Instruktor" />
+          <NavigationProperty Name="People" Relationship="Self.FK_People_Group_p" FromRole="Group_p" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Instruktor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_Group" Type="Int32" />
+          <NavigationProperty Name="Group_p" Relationship="Self.FK_Instruktor_Group_p" FromRole="Instruktor" ToRole="Group_p" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date_bir" Type="DateTime" Precision="0" />
+          <Property Name="id_pol" Type="Int32" Nullable="false" />
+          <Property Name="id_group" Type="Int32" />
+          <NavigationProperty Name="Group_p" Relationship="Self.FK_People_Group_p" FromRole="People" ToRole="Group_p" />
+          <NavigationProperty Name="Pol" Relationship="Self.FK_People_Pol" FromRole="People" ToRole="Pol" />
+        </EntityType>
+        <EntityType Name="Pol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pol1" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="Self.FK_People_Pol" FromRole="Pol" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Kod_podrazdel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kodpodrazdel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Instruktor_Group_p">
+          <End Role="Group_p" Type="Self.Group_p" Multiplicity="0..1" />
+          <End Role="Instruktor" Type="Self.Instruktor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group_p">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Instruktor">
+              <PropertyRef Name="id_Group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Group_p">
+          <End Role="Group_p" Type="Self.Group_p" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group_p">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="id_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Pol">
+          <End Role="Pol" Type="Self.Pol" Multiplicity="1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="id_pol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Group_p" EntityType="Self.Group_p" />
+          <EntitySet Name="Instruktor" EntityType="Self.Instruktor" />
+          <EntitySet Name="People" EntityType="Self.People" />
+          <EntitySet Name="Pol" EntityType="Self.Pol" />
+          <EntitySet Name="Kod_podrazdel" EntityType="Self.Kod_podrazdel" />
+          <AssociationSet Name="FK_Instruktor_Group_p" Association="Self.FK_Instruktor_Group_p">
+            <End Role="Group_p" EntitySet="Group_p" />
+            <End Role="Instruktor" EntitySet="Instruktor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Group_p" Association="Self.FK_People_Group_p">
+            <End Role="Group_p" EntitySet="Group_p" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Pol" Association="Self.FK_People_Pol">
+            <End Role="Pol" EntitySet="Pol" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PEModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Group_p">
+            <EntityTypeMapping TypeName="PEModel.Group_p">
+              <MappingFragment StoreEntitySet="Group_p">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kol_chel" ColumnName="Kol_chel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Instruktor">
+            <EntityTypeMapping TypeName="PEModel.Instruktor">
+              <MappingFragment StoreEntitySet="Instruktor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="id_Group" ColumnName="id_Group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="PEModel.People">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="date_bir" ColumnName="date_bir" />
+                <ScalarProperty Name="id_pol" ColumnName="id_pol" />
+                <ScalarProperty Name="id_group" ColumnName="id_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pol">
+            <EntityTypeMapping TypeName="PEModel.Pol">
+              <MappingFragment StoreEntitySet="Pol">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="pol1" ColumnName="pol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kod_podrazdel">
+            <EntityTypeMapping TypeName="PEModel.Kod_podrazdel">
+              <MappingFragment StoreEntitySet="Kod_podrazdel">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kodpodrazdel" ColumnName="Kodpodrazdel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

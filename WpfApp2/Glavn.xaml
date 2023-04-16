@@ -1,0 +1,17 @@
+﻿<Page x:Class="WpfApp2.Glavn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp2"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="846"
+      Title="Glavn">
+
+    <Grid>
+        <Label Content="Введите код подразделения" HorizontalAlignment="Center" Margin="0,66,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="KOD" HorizontalAlignment="Center" Margin="0,138,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="200"/>
+        <Button Content="Войти" HorizontalAlignment="Center" Margin="0,312,0,0" VerticalAlignment="Top" Width="200" Click="Button_Click"/>
+
+    </Grid>
+</Page>
